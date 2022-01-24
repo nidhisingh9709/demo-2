@@ -1,13 +1,25 @@
 package com.example.entity;
 
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity
+@Table(name="Customer")
 public class Customerdata {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
 	@NotBlank
 	@Size(max=25)
 	private String Customer;
@@ -42,6 +54,15 @@ public class Customerdata {
 	@Size(max=30)
 	@Pattern(regexp="^[0-9 a-z A-Z ]+ @[0-9 a-z A-Z .-]+$")
 	private String email;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 	public String getCustomer() {
 		return Customer;
