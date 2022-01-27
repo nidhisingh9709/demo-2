@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.demo.controller;
 
 import javax.validation.Valid;
 
@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Account;
-import com.example.service.AccountService;
+import com.example.demo.entity.Account;
+import com.example.demo.Service.AccountService;
+
 
 @RestController
 public class AccountController {
+	
 	@Autowired
 	AccountService accountService;
 	

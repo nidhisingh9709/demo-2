@@ -1,11 +1,12 @@
+package com.example.demo.Service;
 
-package com.example.service;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.entity.Account;
-import com.example.repository.AccountRepository;
+import com.example.demo.entity.Account;
+import com.example.demo.repository.AccountRepository;
 
 @Service
 public class AccountService {
@@ -18,7 +19,7 @@ public class AccountService {
 		return accountRepository.findAll();
 	}
 
-	public void saveAccount(Account account) {
+	public void saveAccount(@Valid Account account) {
 		// TODO Auto-generated method stub
 		accountRepository.save(account);
 	}

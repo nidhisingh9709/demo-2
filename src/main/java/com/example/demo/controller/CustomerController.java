@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.demo.controller;
 
 import java.util.Optional;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Customer;
-import com.example.service.CustomerService;
+import com.example.demo.entity.Customer;
+import com.example.demo.Service.CustomerService;
 
 @RestController
 public class CustomerController {
@@ -35,11 +35,11 @@ public class CustomerController {
 	@PostMapping("/customer")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	void addCustomer(@RequestBody @Valid Customer customer) {
-		customerService.addUser(customer);
+		customerService.addCustomer(customer);
 			
 	}
-	@DeleteMapping("/deposit/{id}")
+	@DeleteMapping("/customer/{id}")
 	void deleteDeposit(@PathVariable("id") Integer id) {
-		customerService.deleteDeposit(id);
+		customerService.deleteCustomer(id);
 	}
 }

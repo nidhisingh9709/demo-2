@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.demo.controller;
 
 import java.util.Optional;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Deposit;
-import com.example.service.DepositService;
+import com.example.demo.entity.Deposit;
+import com.example.demo.Service.DepositService;
 
 @RestController
 	public class DepositController {
