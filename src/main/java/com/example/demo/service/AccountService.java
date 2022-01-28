@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Customer;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.CustomerRepository;
 
 @Service
 public class AccountService {
@@ -14,19 +16,23 @@ public class AccountService {
 	@Autowired
 	AccountRepository accountRepository;
 	
+	@Autowired
+	CustomerRepository customerRepository;
+	
 	public Iterable<Account> getAccount() {
 		// TODO Auto-generated method stub
 		return accountRepository.findAll();
 	}
 
-	public void saveAccount(@Valid Account account) {
+	public void saveAccount(@Valid Account account,Integer id) {
 		// TODO Auto-generated method stub
-		accountRepository.save(account);
+		Customer customer= customerRepository.findById(id).get();
+		Account account1 = customer.getAccount();
+		
+		accountRepository.save(account1);
+		customerRepository.save(customer);
 	}
 
-	public void deleteAccount(Integer id) {
-		// TODO Auto-generated method stub
-		accountRepository.deleteById(id);
-	}
+
 
 }

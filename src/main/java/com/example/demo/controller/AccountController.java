@@ -26,14 +26,10 @@ public class AccountController {
 	public Iterable<Account> getAccount(){
 		return accountService.getAccount();
 	}
-	@PostMapping("/account")
+	@PostMapping("{id}/account")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void saveAccount(@RequestBody @Valid Account account) {
-		accountService.saveAccount(account);
+	public void saveAccount(@RequestBody @Valid Account account, @PathVariable("id") Integer id) {
+		accountService.saveAccount(account,id);
 	}
 	
-	@DeleteMapping("/account/{id}")
-	public void deleteAccount(@PathVariable("id") Integer id) {
-		accountService.deleteAccount(id);
-	}
 }

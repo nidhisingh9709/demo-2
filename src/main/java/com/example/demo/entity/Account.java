@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -35,7 +38,29 @@ public class Account {
     
     @OneToOne(mappedBy="account")
     Customer customer;
+    
+    @OneToMany(mappedBy="account")
+    List<Withdraw> withdraw;
+    
+    @OneToMany(mappedBy="account")
+    List<Deposit> deposit;
 	
+	public List<Withdraw> getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(List<Withdraw> withdraw) {
+		this.withdraw = withdraw;
+	}
+
+	public List<Deposit> getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(List<Deposit> deposit) {
+		this.deposit = deposit;
+	}
+
 	public long getCustomerId() {
 		return customerId;
 	}

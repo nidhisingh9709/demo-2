@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,34 +8,44 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Range;
-
 @Entity
-public class Deposit {
+@Table(name = "WithdrawTable")
+public class Withdraw {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@NotBlank(message = "Account no. is required")
-	@Size(max = 10, message = "Account number should not be greater than 10")
-	@Pattern(regexp = "^[0-9]+$")
-	private int Account_Number;
+	private Integer id;
 
-	@NotBlank(message = "Enter an amount")
-	@Range(min = 1, message = "You should enter an amount greater than 0")
-	@Pattern(regexp = "^[0-9]+.[0-9][0-9]$")
+	@NotBlank
+	@Size(max = 10)
+	@Pattern(regexp = "^[0-9]+$")
 	private int amount;
 
+	@NotBlank
+	@Pattern(regexp="^[0-9]+$")
+	@Size(max=10)
+	@Column(name="Account_number")
+	private int accountNumber;
+
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
 	private String description;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="account_id" ,referencedColumnName="id")
-    private Account account;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "account_id", referencedColumnName = "id")
+	private Account account;
+
 	public Account getAccount() {
 		return account;
 	}
@@ -43,12 +54,16 @@ public class Deposit {
 		this.account = account;
 	}
 
-	public int getAccount_Number() {
-		return Account_Number;
+	public Withdraw() {
+
 	}
 
-	public void setAccount_Number(int account_Number) {
-		Account_Number = account_Number;
+	public Withdraw( int amount, int accountNumber, String description) {
+		super();
+		this.amount = amount;
+		this.accountNumber = accountNumber;
+		this.description = description;
+	
 	}
 
 	public int getAmount() {
@@ -59,19 +74,14 @@ public class Deposit {
 		this.amount = amount;
 	}
 
+	
+
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 }

@@ -6,30 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Account;
-import com.example.demo.entity.Deposit;
+import com.example.demo.entity.Withdraw;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.DepositRepository;
+import com.example.demo.repository.WithdrawRepository;
 
 @Service
-public class DepositService {
-
-	@Autowired
-	DepositRepository depositRepository;
+public class WithdrawService {
 	
 	@Autowired
 	AccountRepository accountRepository;
 	
-	public void saveDeposit(@Valid Deposit deposit) {
+	@Autowired
+	WithdrawRepository withdrawRepository;
+
+	public void addWithdraw(@Valid Withdraw withdraw, Integer id) {
 		// TODO Auto-generated method stub
-		Integer accId= deposit.getAccount_Number();
+		Integer accId= withdraw.getAccountNumber();
 		Account account= accountRepository.findById(accId).get();
 		
 		Integer initialAmount= (int) account.getInitialDeposit();
-		Integer finalAmount= deposit.getAmount()+initialAmount;
+		Integer finalAmount= initialAmount - withdraw.getAmount();
 		
 		account.setInitialDeposit(finalAmount);
 		accountRepository.save(account);
-		depositRepository.save(deposit);
+		withdrawRepository.save(withdraw);
 	}
 
 }
