@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,10 +19,10 @@ import com.example.demo.Service.DepositService;
 		DepositService depositService;
 		
 		
-		@PostMapping("/deposit")
+		@PostMapping("{id}/deposit")
 		@ResponseStatus(code = HttpStatus.CREATED)
-		void addDeposit(@RequestBody @Valid Deposit deposit) {
-			depositService.saveDeposit(deposit);
+		void addDeposit(@RequestBody @Valid Deposit deposit,@PathVariable("id") Integer id) {
+			depositService.saveDeposit(deposit,id);
 		}
 		
 

@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +23,15 @@ public class AccountController {
 	@Autowired
 	AccountService accountService;
 	
-	@GetMapping("/account")
-	public Iterable<Account> getAccount(){
-		return accountService.getAccount();
+	@GetMapping("{id}/account")
+	public Optional<Account> getAccount(@PathVariable("id") Integer id){
+		return accountService.getAccount(id);
 	}
-	@PostMapping("{id}/account")
+	
+	@PostMapping("/account")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void saveAccount(@RequestBody @Valid Account account, @PathVariable("id") Integer id) {
-		accountService.saveAccount(account,id);
+	public void saveAccount(@RequestBody @Valid Account account) {
+		accountService.saveAccount(account);
 	}
 	
 }

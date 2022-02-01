@@ -19,13 +19,12 @@ public class DepositService {
 	@Autowired
 	AccountRepository accountRepository;
 	
-	public void saveDeposit(@Valid Deposit deposit) {
+	public void saveDeposit(@Valid Deposit deposit,Integer id) {
 		// TODO Auto-generated method stub
-		Integer accId= deposit.getAccount_Number();
-		Account account= accountRepository.findById(accId).get();
+		Account account= accountRepository.findById(id).get();
 		
-		Integer initialAmount= (int) account.getInitialDeposit();
-		Integer finalAmount= deposit.getAmount()+initialAmount;
+		double initialAmount= account.getInitialDeposit();
+		double finalAmount= deposit.getAmount()+initialAmount;
 		
 		account.setInitialDeposit(finalAmount);
 		accountRepository.save(account);

@@ -1,5 +1,7 @@
 package com.example.demo.Service;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +17,25 @@ public class AccountService {
 
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	CustomerRepository customerRepository;
-	
-	public Iterable<Account> getAccount() {
+
+	public Optional<Account> getAccount(Integer id) {
 		// TODO Auto-generated method stub
-		return accountRepository.findAll();
+		return accountRepository.findById(id);
 	}
 
-	public void saveAccount(@Valid Account account,Integer id) {
+	public void saveAccount(@Valid Account account) {
 		// TODO Auto-generated method stub
-		Customer customer= customerRepository.findById(id).get();
-		Account account1 = customer.getAccount();
-		
-		accountRepository.save(account1);
+
+		Integer customer_id = Integer.parseInt(account.getCustomerId());
+		Customer customer = customerRepository.findById(customer_id).get();
+
+		customer.setAccount(account);
+		accountRepository.save(account);
 		customerRepository.save(customer);
+
 	}
-
-
 
 }

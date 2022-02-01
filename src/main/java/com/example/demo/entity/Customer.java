@@ -7,104 +7,106 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-
+import com.sun.istack.NotNull;
 
 @Entity
+@Table(name = "customers")
 public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer customerid;
 
-	// Customer Name
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer custId;
+	
 	@NotBlank
+	@NotNull
 	@Size(max = 25)
 	@Pattern(regexp = "^[a-z A-Z]+$")
-	private String name;
-
-	// Gender
+	private String custName;
+	
 	@NotBlank
-	@Pattern(regexp = "^M(ale)?$|^F(emale)?$")
+	@NotNull
 	private String gender;
-
-	// Date of birth
+	
 	@NotBlank
-    @DateTimeFormat(pattern="dd/mm/yyyy")
+	@NotNull
+	@Pattern(regexp = "^(([0-2][0-9])|([3][0-1]))\\-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\-\\d{4}$")
 	private String dob;
-
-	// Address
+	
 	@NotBlank
+	@NotNull
 	@Size(max = 50)
 	private String address;
-
-	// City
-	@NotBlank
 	
+	@NotBlank
+	@NotNull
 	@Size(max = 25)
-	@Pattern(regexp = "^[a-z A-Z]+$")
+	@Pattern(regexp = "^[a-zA-Z ]+$")
 	private String city;
-
-	// State
+	
 	@NotBlank
+	@NotNull
 	@Size(max = 25)
-	@Pattern(regexp = "^[a-z A-Z]+$")
+	@Pattern(regexp = "^[a-zA-Z ]+$")
 	private String state;
-
-	// ZIP/PIN
+	
 	@NotBlank
+	@NotNull
 	@Pattern(regexp = "[0-9 ]+")
 	@Size(max = 7)
 	private String pin;
-
-	// Telephone
+	
 	@Pattern(regexp = "[0-9 ]+")
 	@Size(max = 15)
-	private String telephoneNo;
-
-	// FAX
+	private String tel;
+	
 	@Size(max = 15)
 	@Pattern(regexp = "[0-9 ]+")
 	private String fax;
-
-	// Email
+	
 	@Email
+	@NotNull
 	@NotBlank
 	@Size(max = 30)
-	@Pattern(regexp = "^[0-9 a-z A-Z ]+ @[0-9 a-z A-Z .-]+$")
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "deposit_id", referencedColumnName = "id")
-     private Deposit deposit;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id", referencedColumnName = "id")
+	@JoinColumn(name = "fk_account_id", referencedColumnName = "id")
 	private Account account;
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
 
 	public Customer() {
 
 	}
 
-	public Integer getCustomerid() {
-		return customerid;
-	}
-
-	public void setCustomerid(Integer customerid) {
-		this.customerid = customerid;
+	public Customer(Integer custId, @NotBlank @Size(max = 25) @Pattern(regexp = "^[a-zA-Z ]+$") String name,
+			@NotBlank String gender,
+			@NotBlank @Pattern(regexp = "^(([0-9])|([0-2][0-9])|([3][0-1]))\\-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\-\\d{4}$") String dob,
+			@NotBlank @Size(max = 50) String address,
+			@NotBlank @Size(max = 25) @Pattern(regexp = "^[a-zA-Z ]+$") String city,
+			@NotBlank @Size(max = 25) @Pattern(regexp = "^[a-zA-Z ]+$") String state,
+			@NotBlank @Pattern(regexp = "[0-9 ]+") @Size(max = 7) String pin,
+			@Pattern(regexp = "[0-9 ]+") @Size(max = 15) String tel,
+			@Size(max = 15) @Pattern(regexp = "[0-9 ]+") String fax,
+			@Email @NotBlank @Size(max = 30) @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])") String email,
+			Account account) {
+		super();
+		this.custId = custId;
+		this.custName = name;
+		this.gender = gender;
+		this.dob = dob;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.pin = pin;
+		this.tel = tel;
+		this.fax = fax;
+		this.email = email;
+		this.account = account;
 	}
 
 	public String getState() {
@@ -123,14 +125,12 @@ public class Customer {
 		this.pin = pin;
 	}
 
-	
-
-	public String getTelephoneNo() {
-		return telephoneNo;
+	public String getTel() {
+		return tel;
 	}
 
-	public void setTelephoneNo(String telephoneNo) {
-		this.telephoneNo = telephoneNo;
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 	public String getFax() {
@@ -150,11 +150,11 @@ public class Customer {
 	}
 
 	public String getName() {
-		return name;
+		return custName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.custName = name;
 	}
 
 	public String getGender() {
@@ -189,4 +189,19 @@ public class Customer {
 		this.city = city;
 	}
 
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 }

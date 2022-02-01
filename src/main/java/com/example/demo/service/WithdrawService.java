@@ -12,24 +12,24 @@ import com.example.demo.repository.WithdrawRepository;
 
 @Service
 public class WithdrawService {
-	
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	WithdrawRepository withdrawRepository;
 
 	public void addWithdraw(@Valid Withdraw withdraw, Integer id) {
 		// TODO Auto-generated method stub
-		Integer accId= withdraw.getAccountNumber();
-		Account account= accountRepository.findById(accId).get();
-		
-		Integer initialAmount= (int) account.getInitialDeposit();
-		Integer finalAmount= initialAmount - withdraw.getAmount();
-		
-		account.setInitialDeposit(finalAmount);
-		accountRepository.save(account);
-		withdrawRepository.save(withdraw);
-	}
 
+		Account account = accountRepository.findById(id).get();
+
+		double initialAmount = account.getInitialDeposit();
+
+			double finalAmount = initialAmount - withdraw.getAmount();
+			account.setInitialDeposit(finalAmount);
+			accountRepository.save(account);
+			withdrawRepository.save(withdraw);
+	
+	}
 }
